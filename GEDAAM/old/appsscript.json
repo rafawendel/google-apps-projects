@@ -1,0 +1,19 @@
+{
+  "timeZone": "America/Sao_Paulo",
+  "dependencies": {
+  },
+  "webapp": {
+    "access": "MYSELF",
+    "executeAs": "USER_DEPLOYING"
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "sheets": {
+    "macros": [{
+      "menuName": "Macro sem título",
+      "functionName": "myFunction"
+    }, {
+      "menuName": "Macro sem título 1",
+      "functionName": "myFunction1"
+    }]
+  }
+}
