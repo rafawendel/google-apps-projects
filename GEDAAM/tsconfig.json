@@ -1,0 +1,11 @@
+{ 
+  "compilerOptions": {
+      "lib": ["esnext"],
+      "experimentalDecorators": true,
+      "allowJs": true,
+      "checkJs": true,
+      "outDir": "tsc",
+      "types": ["google-apps-script"]
+    },
+    "exclude": ["node_modules"]
+}
