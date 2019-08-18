@@ -6,6 +6,32 @@
 // O padrão de substituição deve estar entre marcadores "{{ padrão }}"
 
 var ERRORS = [];
+var CONS = {
+  teste: false,
+  abaTurmas: '[Turmas]',
+  abaMestra: 'Mestra',
+  abaCertificados: 'Certificados',
+  limparEditores: true,
+  deletarAntigas: true,
+  usarDados: true,
+  prefixo: 'G ',
+  divisor: '. ',
+  encontroIndicador: 'E',
+  numeroEncontros: 15,
+  ownerEmail: Session.getEffectiveUser(),
+
+  get masterEditors() {
+    return ['alairr3@gmail.com', 'rafawendel2010@gmail.com'].concat(this.ownerEmail.toString().split(','));
+  },
+
+  idModeloCertificados: '1rHzxIKWNwei0vIPj8dBPuXuycuNUWN_HQWVdG_E7aeU',
+  // Hash da URL da Apresentação modelo de cer'tificado'
+  idPastaCertificados: '1Zueap6QjwvvVBKqgnSRqrSFr3oMcos_i',
+  // Hash da URL da pasta onde a cópia do certificado será' estocada'
+  assuntoEmailCertificado: '{{name}}, seu certificado do GEDAAM!',
+  corpoEmailCertificado: '{{name}}, \n\n A equipe de Coordenação do GEDAAM se felicita em enviar-lhe seu certificado de {{duration}} relativo ao período {{range}}. \n\n Obrigado por participar!',
+  htmlTemplate: 'mailTemplate.html'
+};
 
 function certificateSheet() {
   
@@ -32,6 +58,8 @@ function certificateSheet() {
       mail = mailApp(data, generateCertificate(data), html);
       if (!mail) { ERRORS.push("\n Houve um erro ao enviar o certificado de " + data.name + "\n") }
       verifyCol[i] = [mail];
+      verifyRange.setValues(verifyCol);
+      SpreadsheetApp.flush();
       
     }
     
@@ -40,9 +68,6 @@ function certificateSheet() {
     ERRORS.push(err.message) 
     
   } finally {
-    
-    verifyRange.setValues(verifyCol);
-    SpreadsheetApp.flush();
     
     ERRORS = ERRORS[0] ? ERRORS.toString() : "Todos os certificados foram gerados com sucesso"
     SpreadsheetApp.getUi().alert(ERRORS);
@@ -57,7 +82,7 @@ function generateCertificate(data) {
   try {
     
     var templateId = CONS.idModeloCertificados,
-        targetFolderId = CONS.idPastaCertificados,
+        targetFolder = DriveApp.getFolderById(CONS.idPastaCertificados),
         targetFile = DriveApp.getFileById(templateId).makeCopy("Certificado de " + data.name + ".pdf"),
         targetDocument = SlidesApp.openById(targetFile.getId()),
         targetSlide = targetDocument.getSlides()[0];
@@ -68,8 +93,15 @@ function generateCertificate(data) {
     
     targetDocument.saveAndClose();
     
+    var trashFile;
+    var oldFiles = targetFolder.getFilesByName(targetFile.getName());
+    while (oldFiles.hasNext()) {
+      trashFile = oldFiles.next();
+      trashFile.setTrashed(true);
+    }
+    
     var blob = targetFile.getAs("application/pdf").copyBlob(),  
-        backupFile = DriveApp.getFolderById(targetFolderId).createFile(blob);
+        backupFile = targetFolder.createFile(blob);
     
     targetFile.setTrashed(true);
     if (CONS.teste) { backupFile.setTrashed(true) }
@@ -91,7 +123,6 @@ function mailApp(data, attachment, html) {
   
   if (MailApp.getRemainingDailyQuota() < 1) {
     ERRORS.push("\n A cota de emails diária se esgotou \n");
-    throw new Error("A cota de emails diária se esgotou");
     
     return false
     

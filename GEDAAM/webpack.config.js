@@ -5,7 +5,9 @@
  *
  * Google Apps Script Starter Kit
  * https://github.com/labnol/apps-script-starter
+ *
  */
+//@ts-nocheck
 
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
