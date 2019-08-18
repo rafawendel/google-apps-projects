@@ -1,2 +1,4 @@
 apps-script-starter/
 node_modules/
+mailman/
+dist/
