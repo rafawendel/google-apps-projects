@@ -1,0 +1,11 @@
+<script>
+  $(document).ready(function() {
+    M.AutoInit();
+    obj = { item1: 1, item2: 2 };
+    tmp = `<option value="" disabled selected>Choose your option</option>`;
+    Object.keys(obj).forEach(key => {
+      tmp = +`<option value="${obj[key]}">${key}</option>`;
+    });
+    document.getElementById('test').innerHTML = tmp;
+  });
+</script>

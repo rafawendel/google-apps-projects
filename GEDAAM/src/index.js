@@ -1,7 +1,10 @@
-import certificateSheet from './certificateSheet';
-import CONS from './config';
+//@ts-nocheck
+/**
+ * @OnlyCurrentDoc
+ */
 
-// @ts-ignore
+import certificateSheet from './certificates/data-get';
+import CONS from './main/config';
+
 global.CONS = CONS;
-// @ts-ignore
 global.certificateSheet = certificateSheet;
