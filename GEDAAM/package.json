@@ -25,7 +25,7 @@
     "apps-script"
   ],
   "dependencies": {
-    "typescript": "^3.5.3"
+    "typescript": "^3.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -36,17 +36,17 @@
     "@babel/plugin-transform-property-literals": "^7.2.0",
     "@babel/preset-env": "^7.5.5",
     "@google/clasp": "^2.2.1",
-    "@types/google-apps-script": "0.0.54",
-    "babel-eslint": "^10.0.2",
+    "@types/google-apps-script": "0.0.58",
+    "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-array-includes": "^2.0.3",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.0.4",
-    "eslint": "^6.1.0",
-    "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-loader": "^2.2.1",
+    "eslint": "^6.2.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.1.0",
+    "eslint-loader": "^3.0.0",
     "eslint-plugin-googleappsscript": "^1.0.3",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.0",
@@ -54,7 +54,7 @@
     "gas-webpack-plugin": "^1.0.2",
     "prettier": "^1.18.2",
     "uglifyjs-webpack-plugin": "^2.1.3",
-    "webpack": "^4.38.0",
-    "webpack-cli": "^3.3.6"
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7"
   }
 }
