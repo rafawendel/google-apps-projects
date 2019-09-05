@@ -1,4 +1,4 @@
-import CONS from '../main/config';
+import CONS from '../config/main';
 
 /**
  * @param {object} data {name:string, email:string, sent?:boolean, any:any}

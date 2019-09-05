@@ -1,6 +1,6 @@
 {
   "name": "gedaam-scripts",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "description": "Projects for dealing with GEDAAM technical demands",
   "author": {
     "name": "Rafael Wendel Carvalho Cruz",
@@ -45,7 +45,7 @@
     "copy-webpack-plugin": "^5.0.4",
     "eslint": "^6.2.2",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-config-prettier": "^6.1.0",
+    "eslint-config-prettier": "^6.2.0",
     "eslint-loader": "^3.0.0",
     "eslint-plugin-googleappsscript": "^1.0.3",
     "eslint-plugin-import": "^2.18.2",

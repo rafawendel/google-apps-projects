@@ -5,7 +5,7 @@
  *O padrão de substituição deve estar entre marcadores "{{ padrão }}"
  */
 
-import CONS from '../main/config';
+import CONS from '../config/main';
 import mailApp from '../main/mail';
 import generateCertificate from './certificates';
 
