@@ -6,7 +6,7 @@ import CONS from '../config/main';
  * @param {blob} attachment
  * @param {string} html
  */
-const mailApp = (data, attachment, html) => {
+const mailApp = (data, html, attachment) => {
   const log = [];
 
   if (MailApp.getRemainingDailyQuota() < 1) {
@@ -70,7 +70,7 @@ const mailApp = (data, attachment, html) => {
     log.push(err.message);
     try {
       MailApp.sendEmail(data.email, subject, body, {
-        attachments: [attachment],
+        attachments: attachment ? [attachment] : [],
         from: 'coordenacaogedaam+ti@gmail.com',
         htmlBody,
         name: 'GEDAAM: Dpto. de TI',

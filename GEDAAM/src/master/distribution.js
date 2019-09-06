@@ -9,9 +9,7 @@ const studentDistributor = (students, groups) => {
     const opt2 = student.choices.opt2.id || 0;
     let index = 0;
 
-    if (opt1 === 0 || !groupIDs.includes(opt1)) {
-      student.status.gotOpt1 = false;
-    } else {
+    if (opt1 !== 0 || groupIDs.includes(opt1)) {
       index = groupIDs.indexOf(opt1);
       if (groupsMap[index].size.available > 0) {
         student.status.opt1 = true;
@@ -21,12 +19,13 @@ const studentDistributor = (students, groups) => {
         groupsMap[index].size.available -= 1;
         return;
       }
-      student.status.gotOpt1 = false;
+    } else if (opt2 === 0 || !groupIDs.includes(opt2)) {
+      student.status.valid = false;
+      return;
     }
+    student.status.gotOpt1 = false;
 
-    if (opt2 === 0 || !groupIDs.includes(opt2)) {
-      student.status.gotOpt2 = false;
-    } else {
+    if (opt2 !== 0 || groupIDs.includes(opt2)) {
       index = groupIDs.indexOf(opt2);
       if (groupsMap[index].size.available > 0) {
         student.status.gotOpt2 = true;
@@ -37,10 +36,7 @@ const studentDistributor = (students, groups) => {
       }
       student.status.gotOpt2 = false;
       student.status.waitlist = true;
-      return;
     }
-
-    student.status.valid = false;
   });
 
   return [localStudents, groupsMap];

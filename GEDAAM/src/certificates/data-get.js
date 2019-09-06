@@ -41,7 +41,7 @@ const certificateSheet = () => {
         }
       });
       certificate = generateCertificate(data);
-      mail = mailApp(data, certificate[0], html);
+      mail = mailApp(data, html, certificate[0]);
       log.concat(mail[1], certificate[1]);
       if (!mail[0]) {
         log.push(`\n Houve um erro ao enviar o certificado de ${data.name}\n`);
