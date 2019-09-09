@@ -2,4 +2,7 @@ apps-script-starter/
 node_modules/
 mailman/
 dist/
+.clasp*
+.clasprc.json
+config/**
 \_*
