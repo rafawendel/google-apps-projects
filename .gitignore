@@ -2,6 +2,6 @@ apps-script-starter/
 node_modules/
 mailman/
 dist/
-.clasp*
+/.clasp*
 \config*
 \_*
