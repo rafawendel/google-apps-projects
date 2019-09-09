@@ -41,9 +41,9 @@ const sendConfirmationEmail = () => {
     replyTo: 'inscricoes'
   };
 
-  // dataRange.forEach(group => {
-  const group = dataRange[0];
-  group.members.forEach(student => {
+  dataRange.forEach(group => {
+    // group.members.forEach(student => {
+    const student = group.members[0];
     const data = {
       choice: group.title,
       name: student.name,
@@ -52,10 +52,11 @@ const sendConfirmationEmail = () => {
 
     const mail = mailApp(data, html, placeholders);
     if (!mail[0]) log.push(mail[1]);
+    // });
   });
-  // });
 
-  SpreadsheetApp.getUi().alert(String(log));
+  Logger.log(log);
+  // SpreadsheetApp.getUi().alert(String(log));
 };
 
 export default sendConfirmationEmail;

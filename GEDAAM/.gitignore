@@ -4,5 +4,5 @@ mailman/
 dist/
 **/config/**
 .clasp*
-.clasprc.json
+creds.json
 \_*

@@ -1,4 +1,3 @@
-// @ts-nocheck
 /*
 Use the following code in order to save HTML from presentation:
 https://developers.google.com/drive/api/v3/reference/files/export
@@ -44,10 +43,10 @@ const mailApp = (data, html, placeholders, attachment = null) => {
 
     Object.keys(placeholders).forEach(item => {
       if (placeholders[item].constructor !== String) return;
-      replacedPlaceholders[item] = placeholders[item].replace(pattern, replacingValue);
+      replacedPlaceholders[item] = replacedPlaceholders[item].replace(pattern, replacingValue);
     });
   });
-  Logger.log(replacedPlaceholders);
+  Logger.log(replacedPlaceholders.body);
 
   // These placeholders depend on the template downloaded from MailChimp
   const mailChimp = {};

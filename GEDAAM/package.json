@@ -13,7 +13,9 @@
   "scripts": {
     "build": "webpack",
     "upload": "clasp push",
-    "deploy": "npm run build && npm run upload"
+    "deploy": "npm run build && npm run upload",
+    "execute": "clasp run",
+    "test": "npm run deploy && npm run execute"
   },
   "repository": {
     "type": "git",

@@ -1,4 +1,4 @@
-{ 
+{
   "compilerOptions": {
     "target": "es5",
     "lib": ["es6"],
@@ -7,6 +7,6 @@
     "checkJs": true,
     "outDir": "tsc",
     "types": ["google-apps-script"]
-    },
+  },
   "exclude": ["node_modules"]
 }
