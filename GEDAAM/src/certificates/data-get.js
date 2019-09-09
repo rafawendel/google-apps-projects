@@ -6,7 +6,7 @@
  */
 
 import CONS from '../config/main';
-import mailApp from '../main/mail';
+import mailApp from '../mail/mail';
 import generateCertificate from './certificates';
 
 const certificateSheet = () => {
@@ -24,10 +24,27 @@ const certificateSheet = () => {
     const data = {};
     const keys = ss.getRange(1, 1, 1, 8).getValues()[0];
     const range = ss.getRange(2, 1, ss.getLastRow() - 1, 8).getValues();
+
     const html = HtmlService.createTemplateFromFile(CONS.certificado.htmlTemplate)
       .evaluate()
       .getContent()
       .toString();
+
+    const placeholders = {
+      subject: CONS.certificado.assuntoEmail,
+      intro: CONS.certificado.introEmail,
+      title: CONS.certificado.tituloEmail,
+      body: CONS.certificado.corpoEmail,
+      teaser: CONS.certificado.teaserEmail,
+      description: CONS.certificado.descricaoEmail,
+      preview: `${CONS.certificado.tituloEmail} ${CONS.certificado.teaserEmail}`,
+      year: new Date().getFullYear(),
+      replyTo: 'certificados'
+    };
+
+    // These placeholders depend on the template downloaded from MailChimp
+    placeholders['*|MC_PREVIEW_TEXT|*'] = `${placeholders.title}. ${placeholders.teaser}`;
+    placeholders['*|MC:SUBJECT|*'] = placeholders.subject;
 
     range.forEach((entry, i) => {
       if (verifyCol[i][0]) {
@@ -41,7 +58,7 @@ const certificateSheet = () => {
         }
       });
       certificate = generateCertificate(data);
-      mail = mailApp(data, html, certificate[0]);
+      mail = mailApp(data, html, placeholders, certificate[0]);
       log.concat(mail[1], certificate[1]);
       if (!mail[0]) {
         log.push(`\n Houve um erro ao enviar o certificado de ${data.name}\n`);
@@ -59,8 +76,4 @@ const certificateSheet = () => {
   }
 };
 
-// @ts-ignore
-global.generateCertificate = generateCertificate;
-// @ts-ignore
-global.mailApp = mailApp;
 export default certificateSheet;

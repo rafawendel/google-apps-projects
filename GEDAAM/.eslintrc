@@ -10,6 +10,7 @@
     "prettier/prettier": "error",
     "import/prefer-default-export": "error",
     //"no-param-reassign": ["error", { "props": false }],
+    // eslint consistent-return: ["error", { "treatUndefinedAsUnspecified": true }],
     "indent": ["error", 2]
   },
   "globals": {

@@ -4,12 +4,10 @@ const exportWaitlist = (studentsList, tab) => {
   tab.appendRow(['Lista de Espera']);
   studentsList.forEach(student => {
     if (!student.status.waitlist) return;
-    tab.appendRow([
-      student.name,
-      student.phone,
-      student.email,
-      `G${student.choices.opt1.id} ou G${student.choices.opt2.id}`
-    ]);
+    const options = 'G';
+    if (student.choices.opt1.id) options.concat(student.choices.opt1.id);
+    if (student.choices.opt2.id) options.concat(` ou G${student.choices.opt2.id}`);
+    tab.appendRow([student.name, student.phone, student.email, options]);
   });
 };
 

@@ -3,12 +3,10 @@
  * @OnlyCurrentDoc
  */
 
-import CONS from './config/main';
 import initialize from './master/_initilialize';
-import duplicateHandler from './master/duplicates';
 import certificateSheet from './certificates/data-get';
+import sendConfirmationEmail from './master/confirmation';
 
-global.CONS = CONS;
 global.initialize = initialize;
-global.duplicateHandler = duplicateHandler;
 global.certificateSheet = certificateSheet;
+global.sendConfirmationEmail = sendConfirmationEmail;

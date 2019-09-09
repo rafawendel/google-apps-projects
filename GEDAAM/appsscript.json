@@ -1,4 +1,7 @@
 {
+  "executionApi": {
+    "access": "ANYONE"
+  },
   "timeZone": "America/Sao_Paulo",
   "webapp": {
     "access": "MYSELF",
