@@ -16,7 +16,8 @@ PACKAGE_VERSION=$(cat package.json \
 read -p "Your commits: "  commentary
 
 # Commit changes.
-msg="GAS `date` v$PACKAGE_VERSION $commentary"
+# msg="GAS `date` v$PACKAGE_VERSION $commentary"
+msg="$PACKAGE_VERSION $commentary"
 if [ $# -eq 1 ]
   then msg="$1"
 fi
