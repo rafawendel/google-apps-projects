@@ -46,21 +46,20 @@ const mailApp = (data, html, placeholders, attachment = null) => {
       replacedPlaceholders[item] = replacedPlaceholders[item].replace(pattern, replacingValue);
     });
   });
-  Logger.log(replacedPlaceholders.body);
 
   // These placeholders depend on the template downloaded from MailChimp
   const mailChimp = {};
   mailChimp.MC_PREVIEW_TEXT = `${replacedPlaceholders.title}. ${replacedPlaceholders.teaser}`;
   mailChimp['MC:SUBJECT'] = replacedPlaceholders.subject;
 
-  let htmlBody;
+  let htmlBody = html; // '{{intro}} \n {{body}}';
   if (html) {
+    htmlBody = Object.keys(replacedPlaceholders).reduce((previous, key) => {
+      return previous.replace(`{{${key}}}`, replacedPlaceholders[key]);
+    }, htmlBody);
     htmlBody = Object.keys(mailChimp).reduce(
       (previous, key) => previous.replace(`*|${key}|*`, mailChimp[key]),
-      Object.keys(replacedPlaceholders).reduce(
-        (previous, key) => previous.replace(`{{${key}}}`, replacedPlaceholders[key]),
-        html
-      )
+      htmlBody
     );
   }
 

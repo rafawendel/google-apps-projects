@@ -42,21 +42,19 @@ const sendConfirmationEmail = () => {
   };
 
   dataRange.forEach(group => {
-    // group.members.forEach(student => {
-    const student = group.members[0];
-    const data = {
-      choice: group.title,
-      name: student.name,
-      email: student.email
-    };
+    group.members.forEach(student => {
+      const data = {
+        choice: group.title,
+        name: student.name,
+        email: student.email
+      };
 
-    const mail = mailApp(data, html, placeholders);
-    if (!mail[0]) log.push(mail[1]);
-    // });
+      const mail = mailApp(data, html, placeholders);
+      if (!mail[0]) log.push(mail[1]);
+    });
   });
 
-  Logger.log(log);
-  // SpreadsheetApp.getUi().alert(String(log));
+  SpreadsheetApp.getUi().alert(String(log));
 };
 
 export default sendConfirmationEmail;
