@@ -1,4 +1,4 @@
-// import JSONDuplicateHandler from './obj-duplicates';
+import JSONDuplicateHandler from './obj-duplicates';
 
 const createObjectFromSheetInput = (
   inputSheet,
@@ -14,22 +14,22 @@ const createObjectFromSheetInput = (
   Object.keys(referenceHashObject).forEach(key => {
     const inputData = inputSheet.getRange(referenceHashObject[key].range).getValues();
     inputData.forEach((row, rowIndex) => {
-      if (rowIndex >= lastRow) return;
-      if (!inputObjectsList[rowIndex]) inputObjectsList.push({ [key]: null });
+      if (rowIndex === 0 || rowIndex >= lastRow) return;
+      if (!inputObjectsList[rowIndex - 1]) inputObjectsList.push({ [key]: null });
       if (inputData[0].length <= 1) {
-        [inputObjectsList[rowIndex][key]] = row;
+        [inputObjectsList[rowIndex - 1][key]] = row;
       } else {
         const objectsList = {};
         row.forEach((cell, colIndex) => {
           if (cell === inputData[0][colIndex]) return;
           objectsList[inputData[0][colIndex]] = cell;
         });
-        inputObjectsList[rowIndex][key] = objectsList;
+        inputObjectsList[rowIndex - 1][key] = objectsList;
       }
     });
   });
 
-  return inputObjectsList; // JSONDuplicateHandler(inputObjectsList, 'register', 'timestamp')
+  return JSONDuplicateHandler(inputObjectsList, 'register', 'timestamp');
 };
 
 export default createObjectFromSheetInput;
