@@ -3,7 +3,7 @@
  * Keys are name according to Student class.
  * @property {array} - array[0] is spreadsheet range; array[ ...] is question(s) title(s)
  */
-class FormResponse {
+class StudentFormResponse {
   constructor() {
     this.timestamp = [];
     this.name = [];
@@ -24,4 +24,4 @@ class FormResponse {
   }
 }
 
-export default FormResponse;
+export default StudentFormResponse;

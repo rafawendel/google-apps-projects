@@ -1,11 +1,11 @@
-import FormResponse from '../classes/formresponse';
+import StudentFormResponse from '../../classes/student-form-response';
 
 /**
  * @param { Object } controlTab { Sheet } object
  * @param { Boolean } update
  * @param {{ timestamp?: any[]; name?: any[]; gender?: any[]; register?: any[]; email?: any[]; phone?: any[]; course?: any[]; semester?: any[]; university?: any[]; declaredNewbie?: any[]; opt1?: any[]; opt2?: any[]; firstContactMedium?: any[]; performanceSummary?: any[]; feedbackSummary?: any[]; availabilitySummary?: any[]; sheetKey?: any; }} objectTemplate
  */
-const controller = (controlTab, update, objectTemplate = new FormResponse()) => {
+const formsDataHashGenerator = (controlTab, update, objectTemplate = new StudentFormResponse()) => {
   let range = {};
   let values = [];
   const formStructure = Object.keys(objectTemplate);
@@ -18,7 +18,7 @@ const controller = (controlTab, update, objectTemplate = new FormResponse()) => 
       values[1].push(objectTemplate[sheetKey][0]);
     });
   } else {
-    range = controlTab.getRange(1, 1, controlTab.getLastRow(), controlTab.getLastColumn());
+    range = controlTab.getDataRange();
     values = range.getValues();
     values.forEach((row, i) => {
       if (!i) return;
@@ -33,4 +33,4 @@ const controller = (controlTab, update, objectTemplate = new FormResponse()) => 
   return objectTemplate;
 };
 
-export default controller;
+export default formsDataHashGenerator;

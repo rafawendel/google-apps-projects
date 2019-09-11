@@ -6,10 +6,10 @@
  */
 
 import CONS from '../config/main';
-import mailApp from '../mail/mail';
-import generateCertificate from './certificates';
+import mailAppGAS from '../mail/mail-gas';
+import generateCertificate from './certificate-gen';
 
-const certificateSheet = () => {
+const certificateFromSheet = () => {
   let log = [];
 
   const ss = SpreadsheetApp.openById('1A1QrlGetRpPO_RDYKDaaM1KJiujWDt51O6nffjwuEDk').getSheetByName(
@@ -25,11 +25,6 @@ const certificateSheet = () => {
     const keys = ss.getRange(1, 1, 1, 8).getValues()[0];
     const range = ss.getRange(2, 1, ss.getLastRow() - 1, 8).getValues();
 
-    const html = HtmlService.createTemplateFromFile(CONS.certificado.htmlTemplate)
-      .evaluate()
-      .getContent()
-      .toString();
-
     const placeholders = {
       subject: CONS.certificado.assuntoEmail,
       intro: CONS.certificado.introEmail,
@@ -41,10 +36,6 @@ const certificateSheet = () => {
       year: new Date().getFullYear(),
       replyTo: 'certificados'
     };
-
-    // These placeholders depend on the template downloaded from MailChimp
-    placeholders['*|MC_PREVIEW_TEXT|*'] = `${placeholders.title}. ${placeholders.teaser}`;
-    placeholders['*|MC:SUBJECT|*'] = placeholders.subject;
 
     range.forEach((entry, i) => {
       if (verifyCol[i][0]) {
@@ -58,7 +49,15 @@ const certificateSheet = () => {
         }
       });
       certificate = generateCertificate(data);
-      mail = mailApp(data, html, placeholders, certificate[0]);
+
+      /* This piece of code came from the child function and needs to be adapted
+        if (!attachment) {
+          log.push(`\n O certificado de ${data.name} está ausente \n`);
+
+          return [false, log];
+        } 
+      */
+      mail = mailAppGAS(data, placeholders, true, certificate[0]);
       log.concat(mail[1], certificate[1]);
       if (!mail[0]) {
         log.push(`\n Houve um erro ao enviar o certificado de ${data.name}\n`);
@@ -76,4 +75,4 @@ const certificateSheet = () => {
   }
 };
 
-export default certificateSheet;
+export default certificateFromSheet;

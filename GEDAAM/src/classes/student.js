@@ -11,6 +11,7 @@ class Student {
     status: { valid = true, gotOpt1 = false, gotOpt2 = false, waitlist = false } = {}
   } = {}) {
     this.primaryKey = primaryKey;
+    this.name = name;
     this.register = register;
     this.position = {
       stamp,
@@ -32,10 +33,11 @@ class Student {
         return primaryKey - this.multiplier;
       }
     };
-    this.name = name;
+    // email and phone should be grouped as one 'contact data' object
     this.email = email;
     this.phone = phone;
-    this.university = university;
+    this.university = university; // this should be coupled with the register
+    // future implementations: univesity id, register properties (length), aliases
     this.choices = { opt1: { id: id1, title: title1 }, opt2: { id: id2, title: title2 } };
     this.status = { valid, gotOpt1, gotOpt2, waitlist };
   }

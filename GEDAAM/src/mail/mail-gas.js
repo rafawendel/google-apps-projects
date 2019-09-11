@@ -10,7 +10,7 @@ MailApp.sendEmail('mike@example.com', 'Attachment example', 'Two files are attac
 */
 import CONS from '../config/main';
 
-const mailApp = (data, html, placeholders, attachment = null) => {
+const mailAppGAS = (data, placeholders, useHtml = true, attachment = null) => {
   const log = [];
   let pattern = /./;
   let replacingValue = '';
@@ -20,14 +20,6 @@ const mailApp = (data, html, placeholders, attachment = null) => {
     log.push('A cota de emails diária se esgotou \n');
     return [false, log];
   }
-
-  /* This piece of code needs to be moved to the mother function, so as to allow emails without attachments
-  if (!attachment) {
-    log.push(`\n O certificado de ${data.name} está ausente \n`);
-
-    return [false, log];
-  } 
-  */
 
   let { subject } = placeholders;
   let body = `${placeholders.intro}\n\n${placeholders.body}`;
@@ -52,8 +44,13 @@ const mailApp = (data, html, placeholders, attachment = null) => {
   mailChimp.MC_PREVIEW_TEXT = `${replacedPlaceholders.title}. ${replacedPlaceholders.teaser}`;
   mailChimp['MC:SUBJECT'] = replacedPlaceholders.subject;
 
-  let htmlBody = html; // '{{intro}} \n {{body}}';
-  if (html) {
+  let htmlBody = null;
+  if (useHtml) {
+    htmlBody = HtmlService.createTemplateFromFile(CONS.email.htmlTemplate)
+      .evaluate()
+      .getContent()
+      .toString();
+
     htmlBody = Object.keys(replacedPlaceholders).reduce((previous, key) => {
       return previous.replace(`{{${key}}}`, replacedPlaceholders[key]);
     }, htmlBody);
@@ -66,7 +63,7 @@ const mailApp = (data, html, placeholders, attachment = null) => {
   const options = {
     attachments: [attachment],
     from: CONS.email.origem,
-    htmlBody,
+    htmlBody: htmlBody || null,
     name: CONS.email.nome,
     replyTo: CONS.email.responderPara.replace(CONS.email.placeholder, replacedPlaceholders.replyTo)
   };
@@ -88,4 +85,4 @@ const mailApp = (data, html, placeholders, attachment = null) => {
   }
 };
 
-export default mailApp;
+export default mailAppGAS;
