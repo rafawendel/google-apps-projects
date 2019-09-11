@@ -1,35 +1,68 @@
+import CONS from '../../config/main';
 import StudentFormResponse from '../../classes/student-form-response';
 
-/**
- * @param { Object } controlTab { Sheet } object
- * @param { Boolean } update
- * @param {{ timestamp?: any[]; name?: any[]; gender?: any[]; register?: any[]; email?: any[]; phone?: any[]; course?: any[]; semester?: any[]; university?: any[]; declaredNewbie?: any[]; opt1?: any[]; opt2?: any[]; firstContactMedium?: any[]; performanceSummary?: any[]; feedbackSummary?: any[]; availabilitySummary?: any[]; sheetKey?: any; }} objectTemplate
- */
-const formsDataHashGenerator = (controlTab, update, objectTemplate = new StudentFormResponse()) => {
-  let range = {};
-  let values = [];
+const formsDataHashGenerator = (
+  controlSheet,
+  MotherTemplate = StudentFormResponse,
+  ui = SpreadsheetApp.getUi()
+) => {
+  const objectTemplate = new MotherTemplate();
   const formStructure = Object.keys(objectTemplate);
 
-  if (update) {
-    range = controlTab.getRange(1, 1, 2, formStructure.length);
-    values = [[], []];
-    formStructure.forEach(sheetKey => {
-      values[0].push(sheetKey);
-      values[1].push(objectTemplate[sheetKey][0]);
-    });
-  } else {
-    range = controlTab.getDataRange();
-    values = range.getValues();
-    values.forEach((row, i) => {
-      if (!i) return;
-      row.forEach((cell, col) => {
-        if (!cell) return;
-        objectTemplate[values[0][col]].push(cell);
+  if (CONS.atualizar.controleAlunos) {
+    let outputData;
+    if (
+      ui.alert(
+        'Aba de referência do formulário',
+        'Você deseja recriar a aba?',
+        ui.ButtonSet.YES_NO
+      ) === ui.Button.YES
+    ) {
+      controlSheet.clear();
+      outputData = [[], [], []];
+    } else {
+      outputData = controlSheet.getDataRange().getValues();
+    }
+
+    try {
+      formStructure.forEach(sheetKey => {
+        if (outputData[0].includes(sheetKey)) return;
+        outputData[0].push(sheetKey);
+        outputData[1].push(objectTemplate[sheetKey].range);
+        outputData[2].push('Inserir Título(s)');
       });
-    });
+      controlSheet.getRange(1, 1, outputData.length, outputData[0].length).setValues(outputData);
+    } catch (error) {
+      ui.alert('Se a aba está em branco, ela deve ser recriada');
+    }
   }
 
-  range.setValues(values);
+  if (
+    ui.alert(
+      'Aba de referência do formulário',
+      'A aba está pronta para ser interpretada?',
+      ui.ButtonSet.YES_NO
+    ) === ui.Button.NO
+  ) {
+    // CONS.atualizar.controleAlunos = false;
+    ui.alert('Execute novamente quando a aba estiver preparada');
+    throw new Error('Aba não está preparada');
+  }
+
+  const inputData = controlSheet.getDataRange().getValues();
+  inputData.forEach((row, rowIndex) => {
+    if (rowIndex === 0) return;
+    row.forEach((cell, colIndex) => {
+      if (!cell) return;
+      if (!inputData[0][colIndex] || !inputData[1][colIndex]) return;
+      if (rowIndex === 1) {
+        objectTemplate[inputData[0][colIndex]].range = cell;
+      } else {
+        objectTemplate[inputData[0][colIndex]].aliases.push(cell);
+      }
+    });
+  });
+
   return objectTemplate;
 };
 

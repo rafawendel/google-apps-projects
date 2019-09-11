@@ -1,6 +1,6 @@
-import Student from '../classes/student';
-import getBonuses from './getbonuses';
-import parseGroupID from './idparser';
+import Student from '../../classes/student';
+import getBonuses from '../getbonuses';
+import parseGroupID from '../groups/idparser';
 
 const studentGenerator = (formObject, groupsMap, bonusTab, startKey = 0) => {
   const studentsArray = [];

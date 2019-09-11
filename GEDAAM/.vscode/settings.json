@@ -1,5 +1,4 @@
 {
-  "files.autoSave": "onFocusChange",
   "git.enabled": true,
   "prettier.singleQuote": true,
   "editor.formatOnSave": true,
@@ -11,7 +10,6 @@
   "[json]": {
     "editor.tabSize": 2
   },
-  "eslint.autoFixOnSave": true,
   "eslint.enable": true,
   "eslint.alwaysShowStatus": true,
   "eslint.validate": ["javascript"]
