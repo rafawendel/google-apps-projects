@@ -1,4 +1,4 @@
-import Group from '../classes/group';
+import Group from '../../classes/group';
 
 const groupsGenerator = (groupsControlTab, groupsMap, startKey = 1) => {
   const groupsArray = [];
@@ -21,10 +21,12 @@ const groupsGenerator = (groupsControlTab, groupsMap, startKey = 1) => {
   groupsMap.forEach((item, i) => {
     // eslint-disable-next-line eqeqeq
     if (item.id == 0) return;
+    const [mainTitle, ...otherTitles] = item.titles;
     const group = new Group({
       primaryKey: startKey + i,
-      id: item.id,
-      title: item.titles[0],
+      id: +item.id,
+      title: mainTitle,
+      aliases: otherTitles,
       schedule: groupsControlObject[item.id].schedule,
       campus: groupsControlObject[item.id].campus,
       size: { total: groupsControlObject[item.id].size }

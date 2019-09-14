@@ -1,5 +1,12 @@
 import JSONDuplicateHandler from './obj-duplicates';
 
+/**
+ * Prompts for creation of prototype interpreter tab and uses it for data reading
+ * Returns array with duplicate-filtered objects from form input
+ * @param {GoogleAppsScript.Spreadsheet.Sheet} inputSheet
+ * @param {Object} referenceHashObject
+ * @param {String} primerColumn
+ */
 const createObjectFromSheetInput = (
   inputSheet,
   referenceHashObject,

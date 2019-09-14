@@ -12,10 +12,10 @@ const studentDistributor = (students, groups) => {
     if (opt1 !== 0 || groupIDs.includes(opt1)) {
       index = groupIDs.indexOf(opt1);
       if (groupsMap[index].size.available > 0) {
-        student.status.opt1 = true;
-        student.status.opt2 = false;
+        student.status.gotOpt1 = true;
+        student.status.gotOpt2 = false;
         student.status.waitlist = false;
-        groupsMap[index].members.push(student);
+        groupsMap[index].members.push(student.register);
         groupsMap[index].size.available -= 1;
         return;
       }
@@ -30,7 +30,7 @@ const studentDistributor = (students, groups) => {
       if (groupsMap[index].size.available > 0) {
         student.status.gotOpt2 = true;
         student.status.waitlist = false;
-        groupsMap[index].members.push(student);
+        groupsMap[index].members.push(student.register);
         groupsMap[index].size.available -= 1;
         return;
       }

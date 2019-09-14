@@ -6,7 +6,7 @@ class Student {
     email = '',
     phone = '',
     university = '',
-    position: { stamp = 0, bonuses = [] } = {},
+    position: { stamp = 0, bonuses = [], linear = 0 } = {},
     choices: { opt1: { id1 = 0, title1 = '' } = {}, opt2: { id2 = 0, title2 = '' } = {} } = {},
     status: { valid = true, gotOpt1 = false, gotOpt2 = false, waitlist = false } = {}
   } = {}) {
@@ -16,6 +16,7 @@ class Student {
     this.position = {
       stamp,
       bonuses,
+      linear,
       get multiplier() {
         if (bonuses[0] instanceof Object) {
           return bonuses.reduce((total, current) => {
@@ -30,7 +31,7 @@ class Student {
         return 0;
       },
       get correction() {
-        return primaryKey - this.multiplier;
+        return this.linear - this.multiplier;
       }
     };
     // email and phone should be grouped as one 'contact data' object

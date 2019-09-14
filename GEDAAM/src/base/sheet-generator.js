@@ -1,4 +1,4 @@
-import CONS from '../../config/main';
+import CONS from '../config/main';
 
 const generateTab = name => {
   const ss = CONS.planilha.usarAtiva

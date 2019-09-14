@@ -1,7 +1,8 @@
-import CONS from '../config/main';
-import mailAppGAS from '../mail/mail-gas';
+import CONS from '../../config/main';
+import mailAppGAS from '../../mail/mail-gas';
+import getJSONFromTab from '../imports/get-json';
 
-const sendConfirmationEmail = (groupsJSONList, log = []) => {
+const sendConfirmationEmail = (groupsJSONTab, log = []) => {
   const placeholders = {
     subject: CONS.confirmacao.assuntoEmail,
     intro: CONS.confirmacao.introEmail,
@@ -13,6 +14,7 @@ const sendConfirmationEmail = (groupsJSONList, log = []) => {
     replyTo: 'inscricoes'
   };
 
+  const groupsJSONList = getJSONFromTab(groupsJSONTab);
   groupsJSONList.forEach(group => {
     group.members.forEach(student => {
       const data = {
